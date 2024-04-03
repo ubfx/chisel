@@ -137,7 +137,7 @@ final class Workspace(
       }
       l("  // Simulation")
       l("  import \"DPI-C\" context task simulation_body();")
-      l("  initial begin")
+      l("  final begin")
       l("    simulation_body();")
       l("  end")
       l("  `ifdef ", Backend.HarnessCompilationFlags.supportsDelayInPublicFunctions)
@@ -273,7 +273,17 @@ final class Workspace(
       commonSettings = commonSettings,
       backendSpecificSettings = backendSpecificSettings
     )
-    val sourceFiles = Seq(primarySourcesPath, generatedSourcesPath)
+    _moduleInfo.get.name
+
+    val primSF = Seq(primarySourcesPath)
+      .map(new File(_))
+      .flatMap(_.listFiles())
+      .map { file => workingDirectory.toPath().relativize(file.toPath()).toString() }
+      .sortBy({
+        ! _.contains(_moduleInfo.get.name)
+      })
+
+    val sourceFiles = primSF ++ Seq(generatedSourcesPath)
       .map(new File(_))
       .flatMap(_.listFiles())
       .map { file => workingDirectory.toPath().relativize(file.toPath()).toString() }

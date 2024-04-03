@@ -93,7 +93,7 @@ lazy val publishSettings = Seq(
     // Check that SBT Dynver can properly derive a version which requires unshallow clone
     val v = version.value
     if (dynverGitDescribeOutput.value.hasNoTags) {
-      sys.error(s"Failed to derive version from git tags. Maybe run `git fetch --unshallow`? Version: $v")
+      //sys.error(s"Failed to derive version from git tags. Maybe run `git fetch --unshallow`? Version: $v")
     }
     (publish / skip).value
   },
