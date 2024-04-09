@@ -73,6 +73,7 @@ lazy val warningSuppression = Seq(
 // This should only be mixed in by projects that are published
 // See 'unipublish' project below
 lazy val publishSettings = Seq(
+  version := "LOCAL",
   versionScheme := Some("semver-spec"),
   publishMavenStyle := true,
   Test / publishArtifact := false,
