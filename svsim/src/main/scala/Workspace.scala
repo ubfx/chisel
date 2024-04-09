@@ -137,7 +137,11 @@ final class Workspace(
       }
       l("  // Simulation")
       l("  import \"DPI-C\" context task simulation_body();")
+      l("`ifdef VERILATOR")
       l("  final begin")
+      l("`else")
+      l("  initial begin")
+      l("`endif")
       l("    simulation_body();")
       l("  end")
       l("  `ifdef ", Backend.HarnessCompilationFlags.supportsDelayInPublicFunctions)
